@@ -17,22 +17,16 @@ const users = new Schema(
         email: {
             type: String,
             required: true,
-            unique: true,
         },
+		role: {
+			type: String,
+			enum: ["user", "admin", "superAdmin",],
+			default: "user",
+		},
         password: {
             type: String,
             required: true,
             minLength: 4
-        },
-        isVerified: {
-            type: Date,
-            required: false,
-            default: null,
-        },
-        isAdmin: {
-            type: Boolean,
-            required: false,
-            default: false,
         },
     },
     {

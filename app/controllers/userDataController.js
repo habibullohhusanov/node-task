@@ -18,7 +18,6 @@ export const update = async (req, res) => {
         }, { new: true });
         const data = new UserResource(user);
         return succes(res, data, "User updated");
-
     } catch (error) {
         return serverError(res, error.message);
     }
@@ -52,6 +51,9 @@ export const destroy = async (req, res) => {
         const { error } = userDestroyRequest.validate(passwords);
         if (error) {
             return requestError(res, error.message);
+        }
+        if (req.user.role == "admin") {
+            return unauthorized(res, "Only the main admin can delete");
         }
         const isCheck = req.user.checkPassword(passwords.password);
         if (!isCheck) {

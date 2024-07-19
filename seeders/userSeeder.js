@@ -5,11 +5,11 @@ const userSeeder = async () => {
         await User.deleteMany({});
         var user = new User({
             name: "Admin",
+            username: "admin",
+            role: "superAdmin",
             email: "admin@gmail.com",
-            password: "2407",
-            isAdmin: true
+            password: "1234",
         });
-        user.userVerify();
         await user.save();
     } catch (error) {
         console.error("User seeder don\'t work:", error);

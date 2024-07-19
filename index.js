@@ -1,7 +1,7 @@
 import express from "express";
 import connect from "./config/dbConfig.js";
 import authRoute from "./routes/authRoute.js";
-import userRoute from "./routes/userRoute.js";
+import userDataRoute from "./routes/userDataRoute.js";
 
 // .env
 
@@ -18,7 +18,7 @@ app.use(express.json());
 // routes
 
 app.use("/auth", authRoute);
-app.use("/user", userRoute);
+app.use("/user", userDataRoute);
 app.get("/", (req, res) => {
     res.status(200).json({
         success: true,

@@ -56,9 +56,9 @@ export const register = async (req, res) => {
         return serverError(res, error.message, false, true);
     }
 }
-export const logout = async (req, res) => {
+// export const logout = async (req, res) => {
 
-}
+// }
 export const user = async (req, res) => {
     try {
         const data = new UserResource(req.user);
@@ -67,13 +67,13 @@ export const user = async (req, res) => {
         return serverError(res, error.message);
     }
 }
-export const verify = async (req, res) => {
-    try {
-        const user = await User.findById(req.user._id);
-        user.userVerify();
-        const data = new UserResource(user);
-        return succes(res, data, "User data");
-    } catch (error) {
-        return serverError(res, error.message);
-    }
-}
+// export const verify = async (req, res) => {
+//     try {
+//         const user = await User.findById(req.user._id);
+//         user.userVerify();
+//         const data = new UserResource(user);
+//         return succes(res, data, "User data");
+//     } catch (error) {
+//         return serverError(res, error.message);
+//     }
+// }

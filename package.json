@@ -1,7 +1,7 @@
 {
-  "name": "express-template",
-  "version": "2.2.0",
-  "description": "db-mongo, without dotenv, api",
+  "name": "node_js_task",
+  "version": "1.0.0",
+  "description": "https://github.com/habibullohhusanov/express-template.git 2.2.0 template used",
   "main": "index.js",
   "type": "module",
   "scripts": {
