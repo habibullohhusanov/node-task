@@ -21,6 +21,10 @@ export const userUpdatePasswordRequest = Joi.object({
     password: Joi.string().min(4).required(),
     password_confirmation: Joi.ref('password'),
 });
+export const userResetPasswordRequest = Joi.object({
+    password: Joi.string().min(4).required(),
+    password_confirmation: Joi.ref('password'),
+});
 export const userDestroyRequest = Joi.object({
     password: Joi.string().min(4).required(),
 });
@@ -28,4 +32,7 @@ export const userPlayerData = Joi.object({
     name: Joi.string().allow(),
     age: Joi.number().required(),
     country: Joi.string().required(),
+});
+export const changeRoleUser = Joi.object({
+    role: Joi.string().valid('admin', 'user').required(),
 });

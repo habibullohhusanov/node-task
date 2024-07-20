@@ -50,7 +50,6 @@ export const updatePassword = async (req, res) => {
         }, { new: true });
         const data = new UserResource(user);
         return succes(res, data, "User password updated");
-
     } catch (error) {
         return serverError(res, error.message);
     }

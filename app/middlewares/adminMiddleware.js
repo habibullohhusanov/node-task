@@ -1,4 +1,4 @@
-import { serverError, unauthorized } from "../../uitls/response";
+import { serverError, unauthorized } from "../../uitls/response.js";
 
 const adminMiddleware = async (req, res, next) => {
     try {

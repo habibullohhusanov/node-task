@@ -1,6 +1,6 @@
-import { serverError, unauthorized } from "../../uitls/response";
+import { serverError, unauthorized } from "../../uitls/response.js";
 
-const adminMiddleware = async (req, res, next) => {
+const superAdminMiddleware = async (req, res, next) => {
     try {
         const role = req.user.role
         if (role !== "superAdmin") {
@@ -11,4 +11,4 @@ const adminMiddleware = async (req, res, next) => {
         return serverError(res, error.message);
     }
 }
-export default adminMiddleware;
+export default superAdminMiddleware;
