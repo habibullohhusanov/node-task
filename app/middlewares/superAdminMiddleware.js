@@ -2,11 +2,13 @@ import { serverError, unauthorized } from "../../uitls/response.js";
 
 const superAdminMiddleware = async (req, res, next) => {
     try {
-        const role = req.user.role
-        if (role !== "superAdmin") {
-            return unauthorized(res);
+        const role = req.user.role;
+        
+        if (role == "superAdmin") {
+            next();
         }
-        next();
+
+        return unauthorized(res);
     } catch (error) {
         return serverError(res, error.message);
     }

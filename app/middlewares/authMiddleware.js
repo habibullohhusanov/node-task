@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import User from "../models/userModel.js";
-import { unauthorized } from "../../uitls/response.js";
+import { serverError, unauthorized } from "../../uitls/response.js";
 
 const authMiddleware = async (req, res, next) => {
     try {

@@ -20,8 +20,7 @@ const players = new Schema(
         },
 		rating: {
 			type: Number,
-            null: true,
-            default: null
+            default: 0,
 		},
         country: {
             type: String,
