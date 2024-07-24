@@ -1,12 +1,16 @@
 import { created, notFound, requestError, serverError, succes, unauthorized } from "../../../uitls/response.js";
+import Player from "../../models/playerModel.js";
 import Tournament from "../../models/tournamentModel.js";
-import User from "../../models/userModel.js";
 import { togglePlayer, tournamentRequest } from "../../requests/tournamentRequest.js";
+import PlayerWithResource from "../../resources/playerWithResource.js";
 import TournamentResource from "../../resources/TournamentResource.js";
 
 const populate = [
     { path: "owner" },
-    { path: "participants" }
+    {
+        path: "participants",
+        populate: "userId",
+    }
 ];
 
 export const index = async (req, res) => {
@@ -14,6 +18,27 @@ export const index = async (req, res) => {
         const tournaments = await Tournament.find().populate(populate);
         const data = tournaments.map(tournament => new TournamentResource(tournament));
         return succes(res, data, "All tournaments");
+    } catch (error) {
+        return serverError(res, error.message);
+    }
+}
+export const own = async (req, res) => {
+    try {
+        const userId = req.user._id;
+
+        const tournaments = await Tournament.find({owner: userId}).populate(populate);
+        const data = tournaments.map(tournament => new TournamentResource(tournament));
+        return succes(res, data, "Tournaments");
+    } catch (error) {
+        return serverError(res, error.message);
+    }
+}
+export const players = async (req, res) => {
+    try {
+        const players = await Player.find().populate("userId");
+        console.log(players);
+        const data = players.map(player => new PlayerWithResource(player));
+        return succes(res, data, "All players");
     } catch (error) {
         return serverError(res, error.message);
     }
@@ -46,7 +71,7 @@ export const store = async (req, res) => {
 
         const tournament = await Tournament.findOne({ name: reqData.name });
         if (tournament) {
-            return requestError(res, "There is a there is a competition with this name");
+            return requestError(res, "There is a competition with this name");
         }
 
         const newTournament = new Tournament({
@@ -65,31 +90,32 @@ export const store = async (req, res) => {
 export const add = async (req, res) => {
     try {
         const reqData = req.body;
-        const { tournamentId, userId } = req.body;
+        const { tournamentId, playerId } = req.body;
 
         const { error } = togglePlayer.validate(reqData);
         if (error) {
             return requestError(res, error.message);
         }
 
-        const user = await User.findById(userId);
-        if (!user) {
-            return notFound(res, "User not found");
+        const player = await Player.findById(playerId);
+        if (!player) {
+            return notFound(res, "Player not found");
         }
         const tournament = await Tournament.findById(tournamentId).populate(populate);
         if (!tournament) {
             return notFound(res, "Tournament not found");
         }
 
-        const check = tournament.participants.includes(userId);
-        if (!check) {
-            tournament.participants.push(userId);
-            await tournament.save();
-        } else {
-            return requestError(res, " The player already was added in this tournament");
+        const check = tournament.participants.some(participant => participant.equals(playerId));
+        if (check) {
+            return requestError(res, "The player already was added in this tournament");
         }
+        tournament.participants.push(playerId);
+        await tournament.save();
 
-        const data = new TournamentResource(tournament);
+        const rePopulate = await tournament.populate(populate);
+
+        const data = new TournamentResource(rePopulate);
 
         return succes(res, data, "Player successfully added by id");
     } catch (error) {
@@ -99,33 +125,34 @@ export const add = async (req, res) => {
 export const remove = async (req, res) => {
     try {
         const reqData = req.body;
-        const { tournamentId, userId } = req.body;
+        const { tournamentId, playerId } = req.body;
 
         const { error } = togglePlayer.validate(reqData);
         if (error) {
             return requestError(res, error.message);
         }
 
-        const user = await User.findById(userId);
-        if (!user) {
-            return notFound(res, "User not found");
+        const player = await Player.findById(playerId);
+        if (!player) {
+            return notFound(res, "Player not found");
         }
         const tournament = await Tournament.findById(tournamentId).populate(populate);
         if (!tournament) {
             return notFound(res, "Tournament not found");
         }
 
-        const check = tournament.participants.includes(userId);
+        const check = tournament.participants.some(participant => participant.equals(playerId));
         if (!check) {
-            return requestError(res, "The player hasn't joined this tournament yet");
-        } else {
-            tournament.participants = tournament.participants.filter(oldUser => oldUser != userId);
-            await tournament.save();
+            return requestError(res, "The player hasn't joined this tournament yet or has already been removed");
         }
+        tournament.participants = tournament.participants.filter(oldUser => !oldUser.equals(playerId));
+        await tournament.save();
 
-        const data = new TournamentResource(tournament);
+        const rePopulate = await tournament.populate(populate);
 
-        return succes(res, data, "Player successfully added by id");
+        const data = new TournamentResource(rePopulate);
+
+        return succes(res, data, "Player successfully removed by id");
     } catch (error) {
         return serverError(res, error.message);
     }
@@ -145,12 +172,12 @@ export const update = async (req, res) => {
         if (!checkTournament) {
             return notFound(res, "Tournament not found");
         }
-        if (checkTournament.owner !== userId) {
-            return unauthorized(res)
+        if (checkTournament.owner._id.toString() !== userId.toString()) {
+            return unauthorized(res, "You can't update this tournament because you didn't create this tournament");
         }
-        if (checkTournament.status == "continues") {
-            if (checkTournament.startAt !== reqData.startAt || checkTournament.finishAt !== reqData.finishAt) {
-                return unauthorized(res, "You can't update the start date or end date of this tournament because this tournament has already started");
+        if (checkTournament.status == "continues" || checkTournament.status == "inactive") {
+            if (checkTournament.startAt.toDateString() !== reqData.startAt || checkTournament.finishAt.toDateString() !== reqData.finishAt) {
+                return unauthorized(res, "You can't update the start date or end date of this tournament because this tournament has already started or finished");
             }
         }
 
@@ -158,7 +185,8 @@ export const update = async (req, res) => {
             ...reqData
         }, { new: true });
 
-        const data = new TournamentResource(tournament);
+        const rePopulate = await tournament.populate(populate);
+        const data = new TournamentResource(rePopulate);
 
         return succes(res, data, "Tournament updated by id");
     } catch (error) {

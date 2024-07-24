@@ -5,10 +5,10 @@ const adminMiddleware = async (req, res, next) => {
         const role = req.user.role;
 
         if (role == "superAdmin") {
-            next();
+            return next();
         }
         if (role == "admin") {
-            next();
+            return next();
         }
 
         return unauthorized(res);

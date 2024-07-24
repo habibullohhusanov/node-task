@@ -6,6 +6,6 @@ export const tournamentRequest = Joi.object({
     finishAt: Joi.date().required(),
 });
 export const togglePlayer = Joi.object({
-    tournamentsId: Joi.string().required(),
-    userId: Joi.string().required(),
+    tournamentId: Joi.string().required(),
+    playerId: Joi.string().required(),
 });
