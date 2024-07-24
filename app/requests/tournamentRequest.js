@@ -9,3 +9,6 @@ export const togglePlayer = Joi.object({
     tournamentId: Joi.string().required(),
     playerId: Joi.string().required(),
 });
+export const joinOrExitInTournament = Joi.object({
+    tournamentId: Joi.string().required(),
+});
