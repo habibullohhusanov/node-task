@@ -37,7 +37,6 @@ export const own = async (req, res) => {
 export const players = async (req, res) => {
     try {
         const players = await Player.find().populate("userId");
-        console.log(players);
         const data = players.map(player => new PlayerWithResource(player));
         return succes(res, data, "All players");
     } catch (error) {

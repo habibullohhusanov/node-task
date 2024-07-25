@@ -135,7 +135,6 @@ export const changeRole = async (req, res) => {
         }, { new: true });
 
         const data = new UserResource(user);
-        console.log(data);
         return succes(res, data, "User's role is changed");
     } catch (error) {
         return serverError(res, error.message);
