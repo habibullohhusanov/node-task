@@ -1,4 +1,4 @@
-import { notFound, requestError, serverError, succes } from "../../uitls/response.js"
+import { notFound, requestError, serverError, succes, unauthorized } from "../../uitls/response.js"
 import Player from "../models/playerModel.js";
 import Tournament from "../models/tournamentModel.js";
 import { joinOrExitInTournament } from "../requests/tournamentRequest.js";
@@ -149,6 +149,9 @@ export const exit = async (req, res) => {
         const tournament = await Tournament.findById(tournamentId).populate(populate);
         if (!tournament) {
             return notFound(res, "Tournament not found");
+        }
+        if (tournament.status !== "active") {
+            return unauthorized(res, "Unable to unsubscribe");
         }
 
         const check = tournament.participants.some(participant => participant.equals(player._id));

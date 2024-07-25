@@ -1,3 +1,4 @@
+import { shortDate } from "../../uitls/date.js";
 import PlayerResource from "./playerResource.js";
 
 export default class UserWithResource {
@@ -7,7 +8,7 @@ export default class UserWithResource {
         this.playerData = player == null ? null : new PlayerResource(player);
         this.username = user.username;
         this.email = user.email;
-        this.createdAt = user.createdAt.toDateString();
-        this.updatedAt = user.updatedAt.toDateString();
+        this.createdAt = shortDate(user.createdAt),
+        this.updatedAt = shortDate(user.updatedAt)
     }
 }

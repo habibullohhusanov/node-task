@@ -1,4 +1,5 @@
 import PlayerWithResource from "./playerWithResource.js";
+import { shortDate } from "../../uitls/date.js";
 import UserResource from "./userResource.js";
 
 export default class TournamentResource {
@@ -8,9 +9,9 @@ export default class TournamentResource {
         this.owner = new UserResource(tournament.owner),
         this.status = tournament.status,
         this.participants = tournament.participants.map(player => new PlayerWithResource(player)),
-        this.startAt = tournament.startAt.toDateString(),
-        this.finishAt = tournament.finishAt.toDateString(),
-        this.createdAt = tournament.createdAt.toDateString(),
-        this.updatedAt = tournament.updatedAt.toDateString()
+        this.startAt = shortDate(tournament.startAt),
+        this.finishAt = shortDate(tournament.finishAt),
+        this.createdAt = shortDate(tournament.createdAt),
+        this.updatedAt = shortDate(tournament.updatedAt)
     }
 }

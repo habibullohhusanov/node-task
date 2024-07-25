@@ -1,3 +1,4 @@
+import { shortDate } from "../../../uitls/date.js";
 import { created, notFound, requestError, serverError, succes, unauthorized } from "../../../uitls/response.js";
 import Player from "../../models/playerModel.js";
 import Tournament from "../../models/tournamentModel.js";
@@ -176,7 +177,7 @@ export const update = async (req, res) => {
             return unauthorized(res, "You can't update this tournament because you didn't create this tournament");
         }
         if (checkTournament.status == "continues" || checkTournament.status == "inactive") {
-            if (checkTournament.startAt.toDateString() !== reqData.startAt || checkTournament.finishAt.toDateString() !== reqData.finishAt) {
+            if (shortDate(checkTournament.startAt) !== shortDate(reqData.startAt) || shortDate(checkTournament.finishAt) !== shortDate(reqData.finishAt)) {
                 return unauthorized(res, "You can't update the start date or end date of this tournament because this tournament has already started or finished");
             }
         }
