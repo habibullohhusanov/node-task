@@ -58,19 +58,19 @@ npm run dev
 [https://documenter.getpostman.com/view/30485454/2sA3kYhJyK](https://documenter.getpostman.com/view/30485454/2sA3kYhJyK)
 
 ## Packages
-+ bcryptjs         2.4.3
-+ express         4.19.2
-+ joi         17.12.3
-+ jsonwebtoken         9.0.2
-+ mongoose         8.3.2
-+ nodemon         3.1.0
-+ node-corn        3.0.3
++ bcryptjs - 2.4.3
++ express - 4.19.2
++ joi - 17.12.3
++ jsonwebtoken - 9.0.2
++ mongoose - 8.3.2
++ nodemon - 3.1.0
++ node-corn - 3.0.3
 
 
 ## File structure
 
 ```
-express-template
+ndoe-task
 .
 ├── app
 │   ├── controllers
