@@ -19,6 +19,20 @@ const userSeeder = async () => {
             password: "1234",
         });
         await user.save();
+        var user = new User({
+            name: "User 1",
+            username: "user1",
+            email: "example@gmail.com",
+            password: "1234",
+        });
+        await user.save();
+        var user = new User({
+            name: "User 2",
+            username: "user2",
+            email: "example@gmail.com",
+            password: "1234",
+        });
+        await user.save();
     } catch (error) {
         console.error("User seeder don\'t work:", error);
     }

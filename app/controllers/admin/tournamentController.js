@@ -1,10 +1,10 @@
-import { shortDate } from "../../../uitls/date.js";
-import { created, notFound, requestError, serverError, succes, unauthorized } from "../../../uitls/response.js";
 import Player from "../../models/playerModel.js";
+import { shortDate } from "../../../uitls/date.js";
 import Tournament from "../../models/tournamentModel.js";
-import { togglePlayer, tournamentRequest } from "../../requests/tournamentRequest.js";
+import TournamentResource from "../../resources/tournamentResource.js";
 import PlayerWithResource from "../../resources/playerWithResource.js";
-import TournamentResource from "../../resources/TournamentResource.js";
+import { togglePlayer, tournamentRequest } from "../../requests/tournamentRequest.js";
+import { created, notFound, requestError, serverError, succes, unauthorized } from "../../../uitls/response.js";
 
 const populate = [
     { path: "owner" },

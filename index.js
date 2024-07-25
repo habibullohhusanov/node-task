@@ -2,14 +2,14 @@ import cron from "node-cron";
 import express from "express";
 import connect from "./config/dbConfig.js";
 import authRoute from "./routes/authRoute.js";
+import Match from "./app/models/matchModel.js";
 import adminRoute from "./routes/admin/adminRoute.js";
 import userDataRoute from "./routes/userDataRoute.js";
+import Tournament from "./app/models/tournamentModel.js";
 import userAdminRoute from "./routes/admin/userRoute.js";
 import tournamentRoute from "./routes/tournamentRoute.js";
-import tournamentAdminRoute from "./routes/admin/tournamentAdminRoute.js";
 import { getTime, isoDate, shortDate, utcDate } from "./uitls/date.js";
-import Tournament from "./app/models/tournamentModel.js";
-import Match from "./app/models/matchModel.js";
+import tournamentAdminRoute from "./routes/admin/tournamentAdminRoute.js";
 
 // .env
 const PORT = process.env.PORT;
@@ -39,7 +39,7 @@ app.get("/", (req, res) => {
 });
 
 // cron
-
+/*
 const populate = [
     { path: "owner" },
     {
@@ -48,7 +48,7 @@ const populate = [
     }
 ];
 
-cron.schedule("*/5 * * * *", async () => {
+cron.schedule("5 * * * *", async () => {
     try {
         const now = new Date();
 
@@ -89,7 +89,7 @@ async function generateSwissPairings(tournament) {
         await match.save();
     }
 }
-
+*/
 // end cron
 
 // end

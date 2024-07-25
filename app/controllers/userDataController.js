@@ -2,9 +2,9 @@ import bcrypt from "bcryptjs";
 import User from "../models/userModel.js";
 import Player from "../models/playerModel.js";
 import UserResource from "../resources/userResource.js";
+import PlayerResource from "../resources/playerResource.js";
 import { created, notFound, requestError, serverError, succes, unauthorized } from "../../uitls/response.js";
 import { userDestroyRequest, userPlayerData, userUpdateDataRequest, userUpdatePasswordRequest } from "../requests/authRequest.js";
-import PlayerResource from "../resources/playerResource.js";
 
 // Update user account data
 export const updateData = async (req, res) => {

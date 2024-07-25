@@ -1,7 +1,7 @@
-import { created, requestError, serverError, succes, unauthorized } from "../../../uitls/response.js"
 import User from "../../models/userModel.js";
-import { changeRoleUser, registerRequest, userUpdateDataRequest } from "../../requests/authRequest.js";
 import UserResource from "../../resources/userResource.js";
+import { created, requestError, serverError, succes, unauthorized } from "../../../uitls/response.js"
+import { changeRoleUser, registerRequest, userUpdateDataRequest } from "../../requests/authRequest.js";
 
 export const index = async (req, res) => {
     try {
@@ -20,7 +20,7 @@ export const show = async (req, res) => {
         if (!admin) {
             return notFound(res, "Admin not found");
         }
-        if (checkAdmin.role == "user") {
+        if (admin.role == "user") {
             return unauthorized(res, "This user isn't admin")
         }
 
@@ -72,13 +72,15 @@ export const update = async (req, res) => {
         if (!checkUser) {
             return notFound(res, "Admin not found");
         }
-        if (checkAdmin.role == "user") {
+        if (checkUser.role == "user") {
             return unauthorized(res, "This user isn't admin")
         }
 
         const checkUsername = await User.findOne({ username: reqData.username });
         if (checkUsername) {
-            return requestError(res, "This username is already in use");
+            if (checkUsername._id.toString() !== checkUser._id.toString()) {
+                return requestError(res, "This username is already in use");
+            }
         }
 
         const admin = await User.findByIdAndUpdate(adminId, {
@@ -89,7 +91,7 @@ export const update = async (req, res) => {
 
         const data = new UserResource(admin);
 
-        return succes(res, data, "User data updated by id");
+        return succes(res, data, "Admin data updated by id");
     } catch (error) {
         return serverError(res, error.message);
     }

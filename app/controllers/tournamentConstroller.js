@@ -1,8 +1,8 @@
-import { notFound, requestError, serverError, succes, unauthorized } from "../../uitls/response.js"
 import Player from "../models/playerModel.js";
 import Tournament from "../models/tournamentModel.js";
+import TournamentResource from "../resources/tournamentResource.js";
 import { joinOrExitInTournament } from "../requests/tournamentRequest.js";
-import TournamentResource from "../resources/TournamentResource.js";
+import { notFound, requestError, serverError, succes, unauthorized } from "../../uitls/response.js"
 
 const populate = [
     { path: "owner" },
@@ -125,7 +125,7 @@ export const join = async (req, res) => {
 
         const data = new TournamentResource(rePopulate);
 
-        return succes(res, data, "you have successfully registered");
+        return succes(res, data, "You have successfully registered");
     } catch (error) {
         return serverError(res, error.message);
     }

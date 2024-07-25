@@ -1,6 +1,6 @@
-import PlayerWithResource from "./playerWithResource.js";
-import { shortDate } from "../../uitls/date.js";
 import UserResource from "./userResource.js";
+import { shortDate } from "../../uitls/date.js";
+import PlayerWithResource from "./playerWithResource.js";
 
 export default class TournamentResource {
     constructor(tournament) {

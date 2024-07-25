@@ -54,6 +54,9 @@ npm run dev
 ### http://localhost:5000
 
 
+## Documentation
+[https://documenter.getpostman.com/view/30485454/2sA3kYhJyK](https://documenter.getpostman.com/view/30485454/2sA3kYhJyK)
+
 ## Packages
 + bcryptjs         2.4.3
 + express         4.19.2
@@ -61,6 +64,7 @@ npm run dev
 + jsonwebtoken         9.0.2
 + mongoose         8.3.2
 + nodemon         3.1.0
++ node-corn        3.0.3
 
 
 ## File structure
@@ -70,25 +74,46 @@ express-template
 .
 ├── app
 │   ├── controllers
+│   │   ├── admin
+│   │   │   ├── adminController.js
+│   │   │   ├── tournamentController.js
+│   │   │   └── userController.js
 │   │   ├── authController.js
-│   │   └── userController.js
+│   │   ├── tournamentController.js
+│   │   └── userDataController.js
 │   ├── middlewares
-│   │   └── authMiddlewares.js
+│   │   ├── adminMiddlewares.js
+│   │   ├── authMiddlewares.js
+│   │   └── superAdminMiddlewares.js
 │   ├── models
+│   │   ├── matchModel.js
+│   │   ├── playerModel.js
+│   │   ├── tournamentModel.js
 │   │   └── userModel.js
 │   ├── requests
-│   │   └── authRequst.js
+│   │   ├── authRequst.js
+│   │   └── tournamentRequst.js
 │   └── resources
-│       └── userResource.js
+│   │   ├── playerResource.js
+│   │   ├── playerWithResource.js
+│   │   ├── tournamentResource.js
+│   │   ├── userResource.js
+│       └── userWithResource.js
 ├── config
 │   └── dbConfig.js
 ├── routes
+│   ├── admin
+│   │   ├── adminRoute.js
+│   │   ├── tournamentAdminRoute.js
+│   │   └── userRoute.js
 │   ├── authRoute.js
-│   └── userRoute.js
+│   ├── tournamentRoute.js
+│   └── userDataRoute.js
 ├── seeders
 │   ├── index.js
 │   └── userSeeder.js
 ├── uilts
+│   ├── date.js
 │   └── response.js
 ├── .env.example
 ├── .gitignore

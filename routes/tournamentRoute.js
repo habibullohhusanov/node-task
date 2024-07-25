@@ -1,6 +1,6 @@
 import express from "express";
-import { active, exit, finished, index, join, show } from "../app/controllers/tournamentConstroller.js";
 import authMiddleware from "../app/middlewares/authMiddleware.js";
+import { active, exit, finished, index, join, show } from "../app/controllers/tournamentConstroller.js";
 
 const router = express.Router();
 

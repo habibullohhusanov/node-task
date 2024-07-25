@@ -101,7 +101,9 @@ export const update = async (req, res) => {
 
         const checkUsername = await User.findOne({ username: reqData.username });
         if (checkUsername) {
-            return requestError(res, "This username is already in use");
+            if (checkUsername._id.toString() !== checkUser._id.toString()) {
+                return requestError(res, "This username is already in use");
+            }
         }
 
         const user = await User.findByIdAndUpdate(userId, {
