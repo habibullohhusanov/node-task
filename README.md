@@ -94,10 +94,10 @@ ndoe-task
 │   │   ├── authRequst.js
 │   │   └── tournamentRequst.js
 │   └── resources
-│   │   ├── playerResource.js
-│   │   ├── playerWithResource.js
-│   │   ├── tournamentResource.js
-│   │   ├── userResource.js
+│       ├── playerResource.js
+│       ├── playerWithResource.js
+│       ├── tournamentResource.js
+│       ├── userResource.js
 │       └── userWithResource.js
 ├── config
 │   └── dbConfig.js
